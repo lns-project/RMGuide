@@ -8,15 +8,15 @@
 import Foundation
 
 struct RMLocationInfo: Decodable {
-    let info: [PaginationLocationInfo]?
+    let info: PaginationLocationInfo?
     let results: [RMLocation]?
 }
 
 struct PaginationLocationInfo: Decodable {
     let count: Int?
     let pages: Int?
-    let next: URL?
-    let prev: URL?
+    let next: String?
+    let prev: String?
 }
 
 struct RMLocation: Decodable {
@@ -25,7 +25,7 @@ struct RMLocation: Decodable {
     let type: String?
     let gender: String?
     let dimension: String?
-    let residents: [URL]?
-    let url: URL?
+    let residents: [String]?
+    let url: String?
     let created: String?
 }

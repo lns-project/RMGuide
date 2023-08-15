@@ -8,15 +8,15 @@
 import Foundation
 
 struct RMEpisodeInfo: Decodable {
-    let info: [PaginationEpisodeInfo]?
+    let info: PaginationEpisodeInfo?
     let results: [RMEpisode]?
 }
 
 struct PaginationEpisodeInfo: Decodable {
     let count: Int?
     let pages: Int?
-    let next: URL?
-    let prev: URL?
+    let next: String?
+    let prev: String?
 }
 
 struct RMEpisode: Decodable {
@@ -24,7 +24,7 @@ struct RMEpisode: Decodable {
     let name: String?
     let air_date: String?
     let episode: String?
-    let characters: [URL]?
-    let url: URL?
+    let characters: [String]?
+    let url: String?
     let created: String?
 }

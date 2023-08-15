@@ -8,7 +8,7 @@
 import Foundation
 
 struct RMCharacterInfo: Decodable {
-    let info: [PaginationCharacterInfo]?
+    let info: PaginationCharacterInfo?
     let results: [RMCharacter]?
 }
 
@@ -26,20 +26,20 @@ struct RMCharacter: Decodable {
     let species: String?
     let type: String?
     let gender: String?
-    let origin: [Origin]?
-    let location: [Location]?
-    let image: URL?
-    let episode: [URL]?
-    let url: URL?
+    let origin: Origin?
+    let location: Location?
+    let image: String?
+    let episode: [String]?
+    let url: String?
     let created: String?
 }
 
 struct Origin: Decodable {
     let name: String?
-    let url: URL?
+    let url: String?
 }
 
 struct Location: Decodable {
     let name: String?
-    let url: URL?
+    let url: String?
 }

@@ -68,10 +68,13 @@ final class RMViewController: UICollectionViewController {
     }
     
     private func showAlert(withStatus status: Alert) {
-        let alert = UIAlertController(title: status.title, message: status.message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default)
-        alert.addAction(okAction)
         DispatchQueue.main.async { [unowned self] in
+            let alert = UIAlertController(title: status.title, message: status.message, preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            
+            alert.addAction(okAction)
+            
             present(alert, animated: true)
         }
     }
@@ -88,14 +91,69 @@ extension RMViewController: UICollectionViewDelegateFlowLayout {
 
 extension RMViewController {
     private func fetchCharacters() {
-        print("=")
+        guard let url = URL(string: Link.charactersURL.rawValue) else { return }
+                
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            guard let data else {
+                print(error?.localizedDescription ?? "No error description")
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            
+            do {
+                let charInfo = try decoder.decode(RMCharacterInfo.self, from: data)
+                print(charInfo)
+                self?.showAlert(withStatus: .success)
+            } catch let error {
+                print(error)
+                self?.showAlert(withStatus: .failed)
+            }
+        }.resume()
     }
     
     private func fetchLocation() {
-        print("==")
+        guard let url = URL(string: Link.locationURL.rawValue) else { return }
+                
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            guard let data else {
+                print(error?.localizedDescription ?? "No error description")
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            
+            do {
+                let charInfo = try decoder.decode(RMLocationInfo.self, from: data)
+                print(charInfo)
+                self?.showAlert(withStatus: .success)
+            } catch let error {
+                print(error)
+                self?.showAlert(withStatus: .failed)
+            }
+        }.resume()
     }
+
     
     private func fetchEpisode() {
-        print("===")
+        guard let url = URL(string: Link.episodeURL.rawValue) else { return }
+                
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            guard let data else {
+                print(error?.localizedDescription ?? "No error description")
+                return
+            }
+            
+            let decoder = JSONDecoder()
+            
+            do {
+                let charInfo = try decoder.decode(RMEpisodeInfo.self, from: data)
+                print(charInfo)
+                self?.showAlert(withStatus: .success)
+            } catch let error {
+                print(error)
+                self?.showAlert(withStatus: .failed)
+            }
+        }.resume()
     }
 }
