@@ -17,6 +17,7 @@
 		6B98679E2A8B617C004C59F0 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B98679D2A8B617C004C59F0 /* Location.swift */; };
 		6B9867A22A8B63A1004C59F0 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9867A12A8B63A1004C59F0 /* Episode.swift */; };
 		6B9867A62A8B7ABA004C59F0 /* UserActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9867A52A8B7ABA004C59F0 /* UserActionCell.swift */; };
+		6B9867A82A8D31D1004C59F0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9867A72A8D31D1004C59F0 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		6B98679D2A8B617C004C59F0 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		6B9867A12A8B63A1004C59F0 /* Episode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		6B9867A52A8B7ABA004C59F0 /* UserActionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActionCell.swift; sourceTree = "<group>"; };
+		6B9867A72A8D31D1004C59F0 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				6B9867902A8B5AB4004C59F0 /* Assets.xcassets */,
 				6B9867952A8B5AB4004C59F0 /* Info.plist */,
 				6B9867A52A8B7ABA004C59F0 /* UserActionCell.swift */,
+				6B9867A72A8D31D1004C59F0 /* NetworkManager.swift */,
 			);
 			path = RMGuide;
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 				6B9867A62A8B7ABA004C59F0 /* UserActionCell.swift in Sources */,
 				6B9867A22A8B63A1004C59F0 /* Episode.swift in Sources */,
 				6B9867882A8B5AB2004C59F0 /* AppDelegate.swift in Sources */,
+				6B9867A82A8D31D1004C59F0 /* NetworkManager.swift in Sources */,
 				6B98679E2A8B617C004C59F0 /* Location.swift in Sources */,
 				6B98678A2A8B5AB2004C59F0 /* SceneDelegate.swift in Sources */,
 				6B98679C2A8B5B49004C59F0 /* Character.swift in Sources */,

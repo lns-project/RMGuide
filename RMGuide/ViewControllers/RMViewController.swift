@@ -7,12 +7,6 @@
 
 import UIKit
 
-enum Link: String {
-    case charactersURL = "https://rickandmortyapi.com/api/character"
-    case locationURL = "https://rickandmortyapi.com/api/location"
-    case episodeURL = "https://rickandmortyapi.com/api/episode"
-}
-
 enum UserAction: String, CaseIterable {
     case fetchCharacters = "Fetch Characters"
     case fetchLocation = "Fetch Location"
@@ -45,6 +39,7 @@ enum Alert {
 final class RMViewController: UICollectionViewController {
     
     private let userActions = UserAction.allCases
+    private let networkManager = NetworkManager.shared
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         userActions.count
@@ -91,69 +86,41 @@ extension RMViewController: UICollectionViewDelegateFlowLayout {
 
 extension RMViewController {
     private func fetchCharacters() {
-        guard let url = URL(string: Link.charactersURL.rawValue) else { return }
-                
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let data else {
-                print(error?.localizedDescription ?? "No error description")
-                return
-            }
-            
-            let decoder = JSONDecoder()
-            
-            do {
-                let charInfo = try decoder.decode(RMCharacterInfo.self, from: data)
-                print(charInfo)
+        NetworkManager.shared.fetch(RMCharacterInfo.self, from: Link.charactersURL.url) { [weak self] result in
+            switch result {
+            case .success(let character):
+                print(character)
                 self?.showAlert(withStatus: .success)
-            } catch let error {
+            case .failure(let error):
                 print(error)
                 self?.showAlert(withStatus: .failed)
             }
-        }.resume()
+        }
     }
     
     private func fetchLocation() {
-        guard let url = URL(string: Link.locationURL.rawValue) else { return }
-                
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let data else {
-                print(error?.localizedDescription ?? "No error description")
-                return
-            }
-            
-            let decoder = JSONDecoder()
-            
-            do {
-                let charInfo = try decoder.decode(RMLocationInfo.self, from: data)
-                print(charInfo)
+        NetworkManager.shared.fetch(RMLocationInfo.self, from: Link.locationURL.url) { [weak self] result in
+            switch result {
+            case .success(let location):
+                print(location)
                 self?.showAlert(withStatus: .success)
-            } catch let error {
+            case .failure(let error):
                 print(error)
                 self?.showAlert(withStatus: .failed)
             }
-        }.resume()
+        }
     }
-
     
     private func fetchEpisode() {
-        guard let url = URL(string: Link.episodeURL.rawValue) else { return }
-                
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
-            guard let data else {
-                print(error?.localizedDescription ?? "No error description")
-                return
-            }
-            
-            let decoder = JSONDecoder()
-            
-            do {
-                let charInfo = try decoder.decode(RMEpisodeInfo.self, from: data)
-                print(charInfo)
+        NetworkManager.shared.fetch(RMEpisodeInfo.self, from: Link.episodeURL.url) { [weak self] result in
+            switch result {
+            case .success(let episode):
+                print(episode)
                 self?.showAlert(withStatus: .success)
-            } catch let error {
+            case .failure(let error):
                 print(error)
                 self?.showAlert(withStatus: .failed)
             }
-        }.resume()
+        }
     }
 }
