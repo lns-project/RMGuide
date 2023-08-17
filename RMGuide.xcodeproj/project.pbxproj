@@ -67,15 +67,14 @@
 			isa = PBXGroup;
 			children = (
 				6B9867A02A8B619E004C59F0 /* ViewControllers */,
+				6B9867A92A8E520E004C59F0 /* Services */,
 				6B98679F2A8B6188004C59F0 /* Models */,
-				6B98678D2A8B5AB2004C59F0 /* Main.storyboard */,
-				6B9867922A8B5AB4004C59F0 /* LaunchScreen.storyboard */,
-				6B9867872A8B5AB2004C59F0 /* AppDelegate.swift */,
+				6B9867AA2A8E5CD8004C59F0 /* Storyboards */,
 				6B9867892A8B5AB2004C59F0 /* SceneDelegate.swift */,
+				6B9867872A8B5AB2004C59F0 /* AppDelegate.swift */,
 				6B9867902A8B5AB4004C59F0 /* Assets.xcassets */,
 				6B9867952A8B5AB4004C59F0 /* Info.plist */,
 				6B9867A52A8B7ABA004C59F0 /* UserActionCell.swift */,
-				6B9867A72A8D31D1004C59F0 /* NetworkManager.swift */,
 			);
 			path = RMGuide;
 			sourceTree = "<group>";
@@ -96,6 +95,23 @@
 				6B98678B2A8B5AB2004C59F0 /* RMViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		6B9867A92A8E520E004C59F0 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6B9867A72A8D31D1004C59F0 /* NetworkManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		6B9867AA2A8E5CD8004C59F0 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				6B98678D2A8B5AB2004C59F0 /* Main.storyboard */,
+				6B9867922A8B5AB4004C59F0 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
