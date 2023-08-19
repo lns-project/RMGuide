@@ -36,7 +36,7 @@ enum Alert {
     }
 }
 
-final class RMViewController: UICollectionViewController {
+class RMViewController: UICollectionViewController {
     
     private let userActions = UserAction.allCases
     private let networkManager = NetworkManager.shared
@@ -70,7 +70,7 @@ final class RMViewController: UICollectionViewController {
         case 0: cell.backgroundColor = UIColor(red: 217/255, green: 193/255, blue: 74/255, alpha: 1.0)
         case 1: cell.backgroundColor = UIColor(red: 140/255, green: 81/255, blue: 92/255, alpha: 1.0)
         case 2: cell.backgroundColor = UIColor(red: 48/255, green: 46/255, blue: 86/255, alpha: 1.0)
-        default: cell.backgroundColor = UIColor(red: 48/255, green: 46/255, blue: 86/255, alpha: 1.0)
+        default: cell.backgroundColor = UIColor(red: 217/255, green: 193/255, blue: 74/255, alpha: 1.0)
         }
         return cell
     }
@@ -79,7 +79,7 @@ final class RMViewController: UICollectionViewController {
         let userAction = userActions[indexPath.item]
         
         switch userAction {
-        case .fetchCharacters: fetchCharacters()
+        case .fetchCharacters: performSegue(withIdentifier: "showCharacter", sender: nil)
         case .fetchLocation: fetchLocation()
         case .fetchEpisode: fetchEpisode()
         }
@@ -96,6 +96,13 @@ final class RMViewController: UICollectionViewController {
             present(alert, animated: true)
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showCharacter" {
+            guard let characterVC = segue.destination as? CharacterViewController else { return }
+            characterVC.fetchCharacters()
+        }
+    }
 
 }
 
@@ -108,18 +115,6 @@ extension RMViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension RMViewController {
-    private func fetchCharacters() {
-        NetworkManager.shared.fetch(RMCharacterInfo.self, from: Link.charactersURL.url) { [weak self] result in
-            switch result {
-            case .success(let character):
-                print(character)
-                self?.showAlert(withStatus: .success)
-            case .failure(let error):
-                print(error)
-                self?.showAlert(withStatus: .failed)
-            }
-        }
-    }
     
     private func fetchLocation() {
         NetworkManager.shared.fetch(RMLocationInfo.self, from: Link.locationURL.url) { [weak self] result in

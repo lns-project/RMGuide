@@ -10,13 +10,13 @@
         <!--Root View Controller-->
         <scene sceneID="oT5-FE-SPS">
             <objects>
-                <tableViewController id="8bA-ie-HV2" sceneMemberID="viewController">
+                <tableViewController id="8bA-ie-HV2" customClass="CharacterViewController" customModule="RMGuide" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="FJf-FR-9DY">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="3y9-1F-bvW">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CharacterCell" id="3y9-1F-bvW">
                                 <rect key="frame" x="0.0" y="50" width="390" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3y9-1F-bvW" id="54v-Mf-uIE">
@@ -89,7 +89,7 @@
                     </collectionView>
                     <navigationItem key="navigationItem" id="5MD-HA-NPg"/>
                     <connections>
-                        <segue destination="8bA-ie-HV2" kind="show" identifier="cell" id="kLb-Te-31y"/>
+                        <segue destination="8bA-ie-HV2" kind="show" identifier="showCharacter" id="kLb-Te-31y"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zKb-wl-Sbr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
