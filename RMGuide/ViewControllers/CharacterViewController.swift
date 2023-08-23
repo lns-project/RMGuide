@@ -67,7 +67,6 @@ class CharacterViewController: UITableViewController, cellDelegateProtocol {
         }
     }
     private func setupUI() {
-        
         tableView.register(CharacterCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
