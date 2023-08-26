@@ -172,7 +172,6 @@ class CharacterCell: UITableViewCell {
                 print(error)
             }
         }
-        
         characterImage.addTarget(self,
                                  action: #selector(self.characterPressed),
                                  for: .touchUpInside)
