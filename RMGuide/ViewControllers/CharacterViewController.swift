@@ -20,14 +20,6 @@ class CharacterViewController: UITableViewController {
         fetchCharacters()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let indexPath = tableView.indexPathForSelectedRow else { return }
-        let character = characterList[indexPath.row]
-        guard let detailVC = segue.destination as?
-                CharacterDetailViewController else { return }
-        detailVC.character = character
-    }
-    
     private func showAlert(withStatus status: Alert) {
         DispatchQueue.main.async { [unowned self] in
             let alert = UIAlertController(title: status.title, message: status.message, preferredStyle: .alert)
@@ -97,12 +89,10 @@ extension CharacterViewController {
     }
 }
 
-extension CharacterViewController: cellDelegateProtocol {
+extension CharacterViewController: ImageTapDelegate {
     
-    func didPressButton(cell: CharacterCell) {
-        if let indexPath = tableView.indexPath(for: cell) {
-            print("===\(indexPath.row)")
-            //navigationController?.pushViewController(CharacterDetailViewController, animated: true)
-        }
+    func didTap(character: RMCharacter) {
+        let vc = CharacterDetailViewController(character: character)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

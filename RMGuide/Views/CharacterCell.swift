@@ -7,18 +7,20 @@
 
 import UIKit
 
-protocol cellDelegateProtocol: AnyObject {
-        func didPressButton(cell: CharacterCell)
+protocol ImageTapDelegate: AnyObject {
+        func didTap(character: RMCharacter)
     }
 
 class CharacterCell: UITableViewCell {
     
     private let networkManager = NetworkManager.shared
-    weak var cellDelegate: cellDelegateProtocol?
+    private var character: RMCharacter?
+    weak var cellDelegate: ImageTapDelegate?
     
     @objc func characterPressed(_ sender: UIButton) {
         print("Click")
-        cellDelegate?.didPressButton(cell: self)
+        guard let character = character else { return }
+        cellDelegate?.didTap(character: character)
     }
     
     private lazy var characterImage: UIButton = {
@@ -49,7 +51,7 @@ class CharacterCell: UITableViewCell {
     private var characterStatView : UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = view.frame.width / 2
+        view.layer.cornerRadius = 5
         view.clipsToBounds = true
         return view
     }()
@@ -58,6 +60,7 @@ class CharacterCell: UITableViewCell {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .horizontal
+        view.spacing = 5
         return view
     }()
     
@@ -66,6 +69,7 @@ class CharacterCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.numberOfLines = 0
         view.textColor = .white
+        view.font = .systemFont(ofSize: 15)
         return view
     }()
     
@@ -90,6 +94,7 @@ class CharacterCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.numberOfLines = 0
         view.textColor = .white
+        view.font = .systemFont(ofSize: 15)
         return view
     }()
     
@@ -145,6 +150,7 @@ class CharacterCell: UITableViewCell {
     }
     
     func configure(with character: RMCharacter) {
+        self.character = character
         
         characterTitle.setTitle(character.name, for: .normal)
         
@@ -187,7 +193,9 @@ class CharacterCell: UITableViewCell {
         descriptionStackView.addArrangedSubview(nameStackView)
         nameStackView.addArrangedSubview(characterTitle)
         nameStackView.addArrangedSubview(statStackView)
-        //statStackView.addArrangedSubview(characterStatView)
+        let containerView = UIView()
+        containerView.addSubview(characterStatView)
+        statStackView.addArrangedSubview(containerView)
         statStackView.addArrangedSubview(characterStat)
         descriptionStackView.addArrangedSubview(locationStackView)
         locationStackView.addArrangedSubview(lastLocationTemplate)
@@ -203,7 +211,13 @@ class CharacterCell: UITableViewCell {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             characterImage.heightAnchor.constraint(equalToConstant: 150),
             characterImage.widthAnchor.constraint(equalToConstant: 150),
-            nameStackView.leftAnchor.constraint(equalTo: descriptionStackView.leftAnchor, constant: 10)
+            nameStackView.leftAnchor.constraint(equalTo: descriptionStackView.leftAnchor, constant: 10),
+            characterStatView.widthAnchor.constraint(equalToConstant: 10),
+            characterStatView.heightAnchor.constraint(equalToConstant: 10),
+            containerView.widthAnchor.constraint(equalToConstant: 10),
+            characterStatView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            characterStatView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            characterStat.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
     

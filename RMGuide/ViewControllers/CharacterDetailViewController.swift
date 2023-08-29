@@ -13,7 +13,7 @@ class CharacterDetailViewController: UIViewController {
     
     private var characterImage: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFill
+        view.contentMode = .scaleAspectFit
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -23,35 +23,144 @@ class CharacterDetailViewController: UIViewController {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.numberOfLines = 0
-        view.font = UIFont.boldSystemFont(ofSize: 20.0)
+        view.textColor = .white
+        view.font = UIFont.boldSystemFont(ofSize: 30.0)
         return view
     }()
     
-    private let stackView: UIStackView = {
+    private var statusTemplate: UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.textColor = .lightGray
+        view.font = UIFont.boldSystemFont(ofSize: 20)
+        return view
+    }()
+    
+    private var speciesTemplate: UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.textColor = .lightGray
+        view.font = UIFont.boldSystemFont(ofSize: 20)
+        return view
+    }()
+    
+    private var genderTemplate: UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.textColor = .lightGray
+        view.font = UIFont.boldSystemFont(ofSize: 20)
+        return view
+    }()
+    
+    private var originTemplate: UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.textColor = .lightGray
+        view.numberOfLines = 0
+        view.font = UIFont.boldSystemFont(ofSize: 20)
+        return view
+    }()
+    
+    private var episodeTemplate: UIButton = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.setTitleColor(.white, for: .normal)
+        view.backgroundColor = UIColor(red: 48/255, green: 46/255, blue: 86/255, alpha: 1.0)
+        view.layer.cornerRadius = 10
+        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 25)
+        return view
+    }()
+    
+    private var statusLabel: UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.textColor = .white
+        view.font = UIFont.systemFont(ofSize: 20)
+        return view
+    }()
+    
+    private var speciesLabel: UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.textColor = .white
+        view.font = UIFont.systemFont(ofSize: 20)
+        return view
+    }()
+    
+    private var genderLabel: UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.textColor = .white
+        view.font = UIFont.systemFont(ofSize: 20)
+        return view
+    }()
+    
+    private var originLabel: UILabel = {
+        let view = UILabel()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.textColor = .white
+        view.numberOfLines = 0
+        view.textAlignment = .left
+        view.font = UIFont.systemFont(ofSize: 20)
+        return view
+    }()
+    
+    private let statusStackView: UIStackView = {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .horizontal
+        return view
+    }()
+    
+    private let speciesStackView: UIStackView = {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .horizontal
+        return view
+    }()
+    
+    private let genderStackView: UIStackView = {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .horizontal
+        return view
+    }()
+    
+    private let originStackView: UIStackView = {
+        let view = UIStackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.axis = .horizontal
+        view.alignment = .leading
+        return view
+    }()
+    
+    private let descriptionStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
-        view.backgroundColor = .red
-        view.spacing = 10
+        view.alignment = .leading
+        view.spacing = 15
+        view.backgroundColor = UIColor(red: 60/255, green: 62/255, blue: 68/255, alpha: 1.0)
         return view
     }()
     
     var character: RMCharacter!
     
-//    init(character: RMCharacter) {
-//        self.character = character
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    init(character: RMCharacter) {
+        super.init(nibName: nil, bundle: nil)
+        self.character = character
+        setupUI()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configueView()
-        view.backgroundColor = .systemBackground
-        // Do any additional setup after loading the view.
+        view.backgroundColor = UIColor(red: 60/255, green: 62/255, blue: 68/255, alpha: 1.0)
+        
     }
     
     private func setImage() {
@@ -68,22 +177,67 @@ class CharacterDetailViewController: UIViewController {
     
     private func configueView() {
         setImage()
+        characterImage.layer.cornerRadius = 10
         characterTitle.text = character.name
+        statusTemplate.text = "Status: "
+        speciesTemplate.text = "Species: "
+        genderTemplate.text = "Gender: "
+        originTemplate.text = "Origin location: "
+        
+        episodeTemplate.setTitle("Show list of episodes", for: .normal)
+        
+        if let status = character.status {
+            statusLabel.text = status
+        }
+        if let species = character.species {
+            speciesLabel.text = species
+        }
+        if let gender = character.gender {
+            genderLabel.text = gender
+        }
+        if let origin = character.origin?.name {
+            originLabel.text = origin
+        }
     }
     
     private func setupUI() {
-        view.addSubview(stackView)
-        stackView.addArrangedSubview(characterImage)
-        stackView.addArrangedSubview(characterTitle)
-        stackView.backgroundColor = .red
+
+        view.addSubview(characterTitle)
+        view.addSubview(characterImage)
+        view.addSubview(descriptionStackView)
+        view.addSubview(episodeTemplate)
         
+        statusStackView.addArrangedSubview(statusTemplate)
+        statusStackView.addArrangedSubview(statusLabel)
+        speciesStackView.addArrangedSubview(speciesTemplate)
+        speciesStackView.addArrangedSubview(speciesLabel)
+        genderStackView.addArrangedSubview(genderTemplate)
+        genderStackView.addArrangedSubview(genderLabel)
+        originStackView.addArrangedSubview(originTemplate)
+        originStackView.addArrangedSubview(originLabel)
+        descriptionStackView.addArrangedSubview(statusStackView)
+        descriptionStackView.addArrangedSubview(speciesStackView)
+        descriptionStackView.addArrangedSubview(genderStackView)
+        descriptionStackView.addArrangedSubview(originStackView)
+
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            characterTitle.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor, constant: 100),
+            characterTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            characterImage.widthAnchor.constraint(equalToConstant: 200),
+            characterImage.heightAnchor.constraint(equalToConstant: 200),
+            characterImage.topAnchor.constraint(lessThanOrEqualTo: characterTitle.bottomAnchor, constant: 20),
+            characterImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            descriptionStackView.topAnchor.constraint(lessThanOrEqualTo: characterImage.bottomAnchor, constant: 20),
+            descriptionStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            descriptionStackView.widthAnchor.constraint(equalToConstant: view.frame.width-20),
+            statusLabel.leadingAnchor.constraint(equalTo: statusTemplate.trailingAnchor, constant: 5),
+            speciesLabel.leadingAnchor.constraint(equalTo: speciesTemplate.trailingAnchor, constant: 5),
+            originLabel.leadingAnchor.constraint(equalTo: originTemplate.trailingAnchor, constant: 0),
+            episodeTemplate.topAnchor.constraint(lessThanOrEqualTo: descriptionStackView.bottomAnchor, constant: 40),
+            episodeTemplate.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            episodeTemplate.widthAnchor.constraint(equalToConstant: view.frame.width-40)
         ]
-                                    )
+        )
     }
 }
 
