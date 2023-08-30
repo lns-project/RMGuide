@@ -20,89 +20,89 @@ class CharacterDetailViewController: UIViewController {
     }()
     
     private var characterTitle: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.numberOfLines = 0
-        view.textColor = .white
-        view.font = UIFont.boldSystemFont(ofSize: 30.0)
-        return view
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 30.0)
+        return label
     }()
     
     private var statusTemplate: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .lightGray
-        view.font = UIFont.boldSystemFont(ofSize: 20)
-        return view
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .lightGray
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
     }()
     
     private var speciesTemplate: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .lightGray
-        view.font = UIFont.boldSystemFont(ofSize: 20)
-        return view
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .lightGray
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
     }()
     
     private var genderTemplate: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .lightGray
-        view.font = UIFont.boldSystemFont(ofSize: 20)
-        return view
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .lightGray
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
     }()
     
     private var originTemplate: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .lightGray
-        view.numberOfLines = 0
-        view.font = UIFont.boldSystemFont(ofSize: 20)
-        return view
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .lightGray
+        label.numberOfLines = 0
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
     }()
     
     private var episodeTemplate: UIButton = {
-        let view = UIButton()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.setTitleColor(.white, for: .normal)
-        view.backgroundColor = UIColor(red: 48/255, green: 46/255, blue: 86/255, alpha: 1.0)
-        view.layer.cornerRadius = 10
-        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 25)
-        return view
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor(red: 48/255, green: 46/255, blue: 86/255, alpha: 1.0)
+        button.layer.cornerRadius = 10
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 25)
+        return button
     }()
     
     private var statusLabel: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .white
-        view.font = UIFont.systemFont(ofSize: 20)
-        return view
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 20)
+        return label
     }()
     
     private var speciesLabel: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .white
-        view.font = UIFont.systemFont(ofSize: 20)
-        return view
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 20)
+        return label
     }()
     
     private var genderLabel: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .white
-        view.font = UIFont.systemFont(ofSize: 20)
-        return view
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 20)
+        return label
     }()
     
     private var originLabel: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.textColor = .white
-        view.numberOfLines = 0
-        view.textAlignment = .left
-        view.font = UIFont.systemFont(ofSize: 20)
-        return view
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 20)
+        return label
     }()
     
     private let statusStackView: UIStackView = {
@@ -140,10 +140,10 @@ class CharacterDetailViewController: UIViewController {
         view.axis = .vertical
         view.alignment = .leading
         view.spacing = 15
-        view.backgroundColor = UIColor(red: 60/255, green: 62/255, blue: 68/255, alpha: 1.0)
         return view
     }()
     
+    var episodesButtonHide = false
     var character: RMCharacter!
     
     init(character: RMCharacter) {
@@ -151,16 +151,30 @@ class CharacterDetailViewController: UIViewController {
         self.character = character
         setupUI()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func showEpisodesPressed(_ sender: UIButton) {
+        if let episodeList = character.episode,
+           let characterName = character.name {
+            let destination = EpisodeListViewController(episodeList: episodeList,
+                                                        characterName: characterName)
+            navigationController?.pushViewController(destination, animated: true)
+            navigationItem.backBarButtonItem = UIBarButtonItem(
+                title: "\(characterName)", style: .plain, target: nil, action: nil)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configueView()
         view.backgroundColor = UIColor(red: 60/255, green: 62/255, blue: 68/255, alpha: 1.0)
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        episodeTemplate.isHidden = episodesButtonHide
     }
     
     private func setImage() {
@@ -185,6 +199,7 @@ class CharacterDetailViewController: UIViewController {
         originTemplate.text = "Origin location: "
         
         episodeTemplate.setTitle("Show list of episodes", for: .normal)
+        episodeTemplate.addTarget(self, action: #selector(showEpisodesPressed), for: .touchUpInside)
         
         if let status = character.status {
             statusLabel.text = status
@@ -201,7 +216,7 @@ class CharacterDetailViewController: UIViewController {
     }
     
     private func setupUI() {
-
+        
         view.addSubview(characterTitle)
         view.addSubview(characterImage)
         view.addSubview(descriptionStackView)
@@ -219,9 +234,10 @@ class CharacterDetailViewController: UIViewController {
         descriptionStackView.addArrangedSubview(speciesStackView)
         descriptionStackView.addArrangedSubview(genderStackView)
         descriptionStackView.addArrangedSubview(originStackView)
-
+        
         NSLayoutConstraint.activate([
             characterTitle.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor, constant: 100),
+            characterTitle.widthAnchor.constraint(equalToConstant: view.frame.width-40),
             characterTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             characterImage.widthAnchor.constraint(equalToConstant: 200),
             characterImage.heightAnchor.constraint(equalToConstant: 200),

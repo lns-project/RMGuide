@@ -8,7 +8,7 @@
 import UIKit
 
 class CharacterViewController: UITableViewController {
-
+    
     private var characterList: [RMCharacter] = []
     private let networkManager = NetworkManager.shared
     private let cellIdentifier = "cell"
@@ -31,7 +31,7 @@ class CharacterViewController: UITableViewController {
             present(alert, animated: true)
         }
     }
-
+    
     private func setupUI() {
         tableView.register(CharacterCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
@@ -43,7 +43,7 @@ class CharacterViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         characterList.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? CharacterCell {
             cell.configure(with: characterList[indexPath.row])
@@ -59,13 +59,31 @@ class CharacterViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.contentView.backgroundColor = UIColor(red: 32/255, green: 35/255, blue: 41/255, alpha: 1.0)
+        
+        if indexPath.row == characterList.count-1,
+           characterList.count == networkManager.currentPage*networkManager.itemsCount {
+            networkManager.currentPage += 1
+            if let urlLink = URL(string: "\(Link.charactersURL.url)/?page=\(networkManager.currentPage)") {
+                NetworkManager.shared.fetch(RMCharacterInfo.self,
+                                            from: urlLink) {
+                    [weak self] result in
+                    switch result {
+                    case .success(let moreCharacters):
+                        if let result = moreCharacters.results {
+                            self?.characterList.append(contentsOf: result)
+                            DispatchQueue.main.async {
+                                self?.tableView.reloadData()
+                            }
+                        }
+                    case .failure(let error):
+                        print(error)
+                        self?.showAlert(withStatus: .failed)
+                    }
+                }
+            }
+            
+        }
     }
-    
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: false)
-//        let character = characterList[indexPath.row]
-//        performSegue(withIdentifier: "detailCharacter", sender: character)
-//    }
 }
 
 extension CharacterViewController {
@@ -89,10 +107,24 @@ extension CharacterViewController {
     }
 }
 
-extension CharacterViewController: ImageTapDelegate {
+extension CharacterViewController: ItemTapDelegate {
     
     func didTap(character: RMCharacter) {
         let vc = CharacterDetailViewController(character: character)
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func didTapLocation(character: RMCharacter) {
+        if let locationUrl = character.location?.url {
+            let vc = LocationDetailViewController(location: locationUrl)
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func didTapEpisode(character: RMCharacter) {
+        if let episodeUrl = character.episode?.first {
+            let vc = EpisodeDetailViewController(episodeLink: episodeUrl)
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

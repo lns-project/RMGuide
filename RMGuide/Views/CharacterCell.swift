@@ -7,45 +7,58 @@
 
 import UIKit
 
-protocol ImageTapDelegate: AnyObject {
-        func didTap(character: RMCharacter)
-    }
+protocol ItemTapDelegate: AnyObject {
+    func didTap(character: RMCharacter)
+    
+    func didTapLocation(character: RMCharacter)
+    
+    func didTapEpisode(character: RMCharacter)
+}
 
 class CharacterCell: UITableViewCell {
     
     private let networkManager = NetworkManager.shared
     private var character: RMCharacter?
-    weak var cellDelegate: ImageTapDelegate?
+    weak var cellDelegate: ItemTapDelegate?
     
     @objc func characterPressed(_ sender: UIButton) {
-        print("Click")
         guard let character = character else { return }
         cellDelegate?.didTap(character: character)
     }
     
+    @objc func locationPressed(_ sender: UIButton) {
+        guard let character = character else { return }
+        cellDelegate?.didTapLocation(character: character)
+    }
+    
+    @objc func episodePressed(_ sender: UIButton) {
+        guard let character = character else { return }
+        cellDelegate?.didTapEpisode(character: character)
+    }
+    
     private lazy var characterImage: UIButton = {
-        let view = UIButton()
-        view.contentMode = .scaleAspectFill
-        view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+        let button = UIButton()
+        button.contentMode = .scaleAspectFill
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     private var characterTitle: UIButton = {
-        let view = UIButton()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.setTitleColor(.white, for: .normal)
-        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        view.contentHorizontalAlignment = .left
-        return view
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.contentHorizontalAlignment = .left
+        return button
     }()
     
     private var characterStat: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.numberOfLines = 0
-        view.textColor = .white
-        return view
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textColor = .white
+        return label
     }()
     
     private var characterStatView : UIView = {
@@ -65,21 +78,21 @@ class CharacterCell: UITableViewCell {
     }()
     
     private var characterLastLocation: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.numberOfLines = 0
-        view.textColor = .white
-        view.font = .systemFont(ofSize: 15)
-        return view
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.font = .systemFont(ofSize: 15)
+        return label
     }()
     
     private var lastLocationTemplate: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.numberOfLines = 0
-        view.textColor = .lightGray
-        view.font = .systemFont(ofSize: 15)
-        return view
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textColor = .lightGray
+        label.font = .systemFont(ofSize: 15)
+        return label
     }()
     
     private let locationStackView: UIStackView = {
@@ -89,22 +102,35 @@ class CharacterCell: UITableViewCell {
         return view
     }()
     
-    private var characterFirstEpisode: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.numberOfLines = 0
-        view.textColor = .white
-        view.font = .systemFont(ofSize: 15)
-        return view
+    private var locationButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
-    private var lastEpisodeTemplate: UILabel = {
-        let view = UILabel()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.numberOfLines = 0
-        view.textColor = .lightGray
-        view.font = .systemFont(ofSize: 15)
-        return view
+    private var episodeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private var characterFirstEpisode: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.lineBreakMode = .byWordWrapping
+        label.font = .systemFont(ofSize: 15)
+        return label
+    }()
+    
+    private var firstEpisodeTemplate: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textColor = .lightGray
+        label.font = .systemFont(ofSize: 15)
+        return label
     }()
     
     private let episodeStackView: UIStackView = {
@@ -119,7 +145,7 @@ class CharacterCell: UITableViewCell {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
-        view.spacing = 5
+        view.spacing = 2
         view.backgroundColor = UIColor(red: 60/255, green: 62/255, blue: 68/255, alpha: 1.0)
         return view
     }()
@@ -155,7 +181,7 @@ class CharacterCell: UITableViewCell {
         characterTitle.setTitle(character.name, for: .normal)
         
         if let status = character.status, let gender = character.gender {
-            characterStatView.backgroundColor = .green
+            characterStatView.backgroundColor = statBackgroundColor(characterStat: character)
             characterStat.text = "\(status) - \(gender)"
         }
         
@@ -164,7 +190,7 @@ class CharacterCell: UITableViewCell {
             characterLastLocation.text = location
         }
         
-        lastEpisodeTemplate.text = "First seen in:"
+        firstEpisodeTemplate.text = "First seen in:"
         if let episode = character.episode?.first {
             characterFirstEpisode.text = episode
         }
@@ -184,6 +210,12 @@ class CharacterCell: UITableViewCell {
         characterTitle.addTarget(self,
                                  action: #selector(self.characterPressed),
                                  for: .touchUpInside)
+        locationButton.addTarget(self,
+                                 action: #selector(self.locationPressed),
+                                 for: .touchUpInside)
+        episodeButton.addTarget(self,
+                                action: #selector(self.episodePressed),
+                                for: .touchUpInside)
     }
     
     private func setupUI() {
@@ -198,10 +230,12 @@ class CharacterCell: UITableViewCell {
         statStackView.addArrangedSubview(containerView)
         statStackView.addArrangedSubview(characterStat)
         descriptionStackView.addArrangedSubview(locationStackView)
+        locationStackView.addSubview(locationButton)
         locationStackView.addArrangedSubview(lastLocationTemplate)
         locationStackView.addArrangedSubview(characterLastLocation)
         descriptionStackView.addArrangedSubview(episodeStackView)
-        episodeStackView.addArrangedSubview(lastEpisodeTemplate)
+        episodeStackView.addSubview(episodeButton)
+        episodeStackView.addArrangedSubview(firstEpisodeTemplate)
         episodeStackView.addArrangedSubview(characterFirstEpisode)
         
         NSLayoutConstraint.activate([
@@ -209,7 +243,7 @@ class CharacterCell: UITableViewCell {
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            characterImage.heightAnchor.constraint(equalToConstant: 150),
+            characterImage.heightAnchor.constraint(equalToConstant: 160),
             characterImage.widthAnchor.constraint(equalToConstant: 150),
             nameStackView.leftAnchor.constraint(equalTo: descriptionStackView.leftAnchor, constant: 10),
             characterStatView.widthAnchor.constraint(equalToConstant: 10),
@@ -217,18 +251,20 @@ class CharacterCell: UITableViewCell {
             containerView.widthAnchor.constraint(equalToConstant: 10),
             characterStatView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             characterStatView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            characterStat.heightAnchor.constraint(equalToConstant: 20)
+            characterStat.heightAnchor.constraint(equalToConstant: 20),
+            locationButton.widthAnchor.constraint(equalToConstant: contentView.frame.width-40),
+            episodeButton.widthAnchor.constraint(equalToConstant: contentView.frame.width-40)
         ])
     }
     
-//    private func statBackgroundColor(characterStat: RMCharacter) -> UIColor {
-//        var status = characterStat.status
-//
-//        switch status {
-//        case "Alive": return .green
-//        case "Dead": return .red
-//        case "unknown": return .lightGray
-//        default: return .lightGray
-//        }
-//    }
+    private func statBackgroundColor(characterStat: RMCharacter) -> UIColor {
+        let status = characterStat.status
+        
+        switch status {
+        case "Alive": return .green
+        case "Dead": return .red
+        case "unknown": return .lightGray
+        default: return .lightGray
+        }
+    }
 }

@@ -31,6 +31,10 @@ enum NetworkError: Error {
 }
 
 final class NetworkManager {
+    
+    var currentPage = 1
+    var itemsCount = 20
+
     static let shared = NetworkManager()
     
     private init() {}
@@ -52,6 +56,12 @@ final class NetworkManager {
     }
     
     func fetch<T: Decodable>(_ type: T.Type, from url: URL, completion: @escaping(Result<T, NetworkError>) -> Void) {
+        
+//        guard let url = getUrl() else {
+//            completion(.failure(.invalidURL))
+//            return
+//        }
+        
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data else {
                 completion(.failure(.noData))
@@ -72,4 +82,16 @@ final class NetworkManager {
             
         }.resume()
     }
+    
+    private func getUrl() -> URL? {
+        let dictionary: [AnyHashable: Any] = [
+        "page": currentPage
+        ]
+        
+        let url = Link.charactersURL.url
+        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        urlComponents?.queryItems = dictionary.map{ return URLQueryItem(name: "\($0)", value: "\($1)")}
+        return urlComponents?.url
+    }
+    
 }
