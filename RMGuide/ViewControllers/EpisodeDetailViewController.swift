@@ -153,10 +153,14 @@ extension EpisodeDetailViewController: UITableViewDelegate, UITableViewDataSourc
                 [weak self] result in
                 switch result {
                 case .success(let character):
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [weak self] in
                         let destination = CharacterDetailViewController(character: character)
                         destination.episodesButtonHide = true
                         self?.navigationController?.pushViewController(destination, animated: true)
+                        if let episodeName = self?.episode?.name {
+                            self?.navigationItem.backBarButtonItem = UIBarButtonItem(
+                                title: "\(episodeName)", style: .plain, target: nil, action: nil)
+                        }
                     }
                 case .failure(let error):
                     print(error)

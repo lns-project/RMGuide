@@ -143,12 +143,15 @@ class CharacterDetailViewController: UIViewController {
         return view
     }()
     
+    private var spinnerView = UIActivityIndicatorView()
+    
     var episodesButtonHide = false
     var character: RMCharacter!
     
     init(character: RMCharacter) {
         super.init(nibName: nil, bundle: nil)
         self.character = character
+        showSpinner(in: characterImage)
         setupUI()
     }
     
@@ -183,6 +186,7 @@ class CharacterDetailViewController: UIViewController {
             switch result {
             case .success(let imageData):
                 self?.characterImage.image = UIImage(data: imageData)
+                self?.spinnerView.stopAnimating()
             case .failure(let error):
                 print(error)
             }
@@ -219,6 +223,7 @@ class CharacterDetailViewController: UIViewController {
         
         view.addSubview(characterTitle)
         view.addSubview(characterImage)
+        view.addSubview(spinnerView)
         view.addSubview(descriptionStackView)
         view.addSubview(episodeTemplate)
         
@@ -254,6 +259,14 @@ class CharacterDetailViewController: UIViewController {
             episodeTemplate.widthAnchor.constraint(equalToConstant: view.frame.width-40)
         ]
         )
+    }
+    
+    private func showSpinner(in view: UIView) {
+        spinnerView = UIActivityIndicatorView(style: .large)
+        spinnerView.color = .white
+        spinnerView.startAnimating()
+        spinnerView.center = characterImage.center
+        spinnerView.hidesWhenStopped = true
     }
 }
 

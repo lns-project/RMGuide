@@ -12,6 +12,8 @@
 		6B08B6E82A9E32D700105F07 /* EpisodeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B08B6E72A9E32D700105F07 /* EpisodeListViewController.swift */; };
 		6B08B6EA2A9E4C4000105F07 /* EpisodeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B08B6E92A9E4C4000105F07 /* EpisodeDetailViewController.swift */; };
 		6B08B6EC2A9F7EFA00105F07 /* LocationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B08B6EB2A9F7EFA00105F07 /* LocationDetailViewController.swift */; };
+		6B08B6EE2A9FB10000105F07 /* EpisodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B08B6ED2A9FB10000105F07 /* EpisodeViewController.swift */; };
+		6B08B6F02AA0968300105F07 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B08B6EF2AA0968300105F07 /* LocationViewController.swift */; };
 		6B9867882A8B5AB2004C59F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9867872A8B5AB2004C59F0 /* AppDelegate.swift */; };
 		6B98678A2A8B5AB2004C59F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9867892A8B5AB2004C59F0 /* SceneDelegate.swift */; };
 		6B98678C2A8B5AB2004C59F0 /* RMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B98678B2A8B5AB2004C59F0 /* RMViewController.swift */; };
@@ -32,6 +34,8 @@
 		6B08B6E72A9E32D700105F07 /* EpisodeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeListViewController.swift; sourceTree = "<group>"; };
 		6B08B6E92A9E4C4000105F07 /* EpisodeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailViewController.swift; sourceTree = "<group>"; };
 		6B08B6EB2A9F7EFA00105F07 /* LocationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailViewController.swift; sourceTree = "<group>"; };
+		6B08B6ED2A9FB10000105F07 /* EpisodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewController.swift; sourceTree = "<group>"; };
+		6B08B6EF2AA0968300105F07 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		6B9867842A8B5AB2004C59F0 /* RMGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RMGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B9867872A8B5AB2004C59F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B9867892A8B5AB2004C59F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,10 +119,12 @@
 			children = (
 				6B98678B2A8B5AB2004C59F0 /* RMViewController.swift */,
 				6B9867AB2A8EA273004C59F0 /* CharacterViewController.swift */,
+				6B08B6EF2AA0968300105F07 /* LocationViewController.swift */,
+				6B08B6ED2A9FB10000105F07 /* EpisodeViewController.swift */,
 				6B08B6E42A937A3A00105F07 /* CharacterDetailViewController.swift */,
+				6B08B6EB2A9F7EFA00105F07 /* LocationDetailViewController.swift */,
 				6B08B6E72A9E32D700105F07 /* EpisodeListViewController.swift */,
 				6B08B6E92A9E4C4000105F07 /* EpisodeDetailViewController.swift */,
-				6B08B6EB2A9F7EFA00105F07 /* LocationDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -215,6 +221,7 @@
 				6B08B6EA2A9E4C4000105F07 /* EpisodeDetailViewController.swift in Sources */,
 				6B08B6EC2A9F7EFA00105F07 /* LocationDetailViewController.swift in Sources */,
 				6B9867AC2A8EA273004C59F0 /* CharacterViewController.swift in Sources */,
+				6B08B6EE2A9FB10000105F07 /* EpisodeViewController.swift in Sources */,
 				6B98678C2A8B5AB2004C59F0 /* RMViewController.swift in Sources */,
 				6B9867A62A8B7ABA004C59F0 /* UserActionCell.swift in Sources */,
 				6B9867A22A8B63A1004C59F0 /* Episode.swift in Sources */,
@@ -225,6 +232,7 @@
 				6B98679E2A8B617C004C59F0 /* Location.swift in Sources */,
 				6B98678A2A8B5AB2004C59F0 /* SceneDelegate.swift in Sources */,
 				6B98679C2A8B5B49004C59F0 /* Character.swift in Sources */,
+				6B08B6F02AA0968300105F07 /* LocationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

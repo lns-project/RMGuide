@@ -80,8 +80,8 @@ class RMViewController: UICollectionViewController {
         
         switch userAction {
         case .fetchCharacters: performSegue(withIdentifier: "showCharacter", sender: nil)
-        case .fetchLocation: fetchLocation()
-        case .fetchEpisode: fetchEpisode()
+        case .fetchLocation: performSegue(withIdentifier: "showLocation", sender: nil)
+        case .fetchEpisode: performSegue(withIdentifier: "showEpisodes", sender: nil)
         }
     }
     
@@ -102,6 +102,14 @@ class RMViewController: UICollectionViewController {
             guard let characterVC = segue.destination as? CharacterViewController else { return }
             characterVC.fetchCharacters()
         }
+        if segue.identifier == "showEpisodes" {
+            guard let episodeVC = segue.destination as? EpisodeViewController else { return }
+            episodeVC.fetchEpisodes()
+        }
+        if segue.identifier == "showLocation" {
+            guard let locationVC = segue.destination as? LocationViewController else { return }
+            locationVC.fetchLocation()
+        }
     }
 
 }
@@ -111,34 +119,5 @@ extension RMViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: UIScreen.main.bounds.width - 48, height: 100)
-    }
-}
-
-extension RMViewController {
-    
-    private func fetchLocation() {
-        NetworkManager.shared.fetch(RMLocationInfo.self, from: Link.locationURL.url) { [weak self] result in
-            switch result {
-            case .success(let location):
-                print(location)
-                self?.showAlert(withStatus: .success)
-            case .failure(let error):
-                print(error)
-                self?.showAlert(withStatus: .failed)
-            }
-        }
-    }
-    
-    private func fetchEpisode() {
-        NetworkManager.shared.fetch(RMEpisodeInfo.self, from: Link.episodeURL.url) { [weak self] result in
-            switch result {
-            case .success(let episode):
-                print(episode)
-                self?.showAlert(withStatus: .success)
-            case .failure(let error):
-                print(error)
-                self?.showAlert(withStatus: .failed)
-            }
-        }
     }
 }

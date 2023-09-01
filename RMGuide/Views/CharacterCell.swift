@@ -166,9 +166,18 @@ class CharacterCell: UITableViewCell {
         return view
     }()
     
+    private var spinnerView: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.style = .large
+        spinner.color = .white
+        spinner.hidesWhenStopped = true
+        return spinner
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+        spinnerView.startAnimating()
     }
     
     required init?(coder: NSCoder) {
@@ -200,6 +209,7 @@ class CharacterCell: UITableViewCell {
             switch result {
             case .success(let imageData):
                 self?.characterImage.setBackgroundImage(UIImage(data: imageData), for: .normal)
+                self?.spinnerView.stopAnimating()
             case .failure(let error):
                 print(error)
             }
@@ -222,6 +232,7 @@ class CharacterCell: UITableViewCell {
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(characterImage)
         stackView.addArrangedSubview(descriptionStackView)
+        characterImage.addSubview(spinnerView)
         descriptionStackView.addArrangedSubview(nameStackView)
         nameStackView.addArrangedSubview(characterTitle)
         nameStackView.addArrangedSubview(statStackView)
@@ -245,6 +256,9 @@ class CharacterCell: UITableViewCell {
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             characterImage.heightAnchor.constraint(equalToConstant: 160),
             characterImage.widthAnchor.constraint(equalToConstant: 150),
+            spinnerView.centerXAnchor.constraint(equalTo: characterImage.centerXAnchor),
+            spinnerView.centerYAnchor.constraint(equalTo: characterImage.centerYAnchor),
+            spinnerView.heightAnchor.constraint(equalTo: characterImage.heightAnchor),
             nameStackView.leftAnchor.constraint(equalTo: descriptionStackView.leftAnchor, constant: 10),
             characterStatView.widthAnchor.constraint(equalToConstant: 10),
             characterStatView.heightAnchor.constraint(equalToConstant: 10),

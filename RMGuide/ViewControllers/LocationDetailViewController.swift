@@ -116,17 +116,19 @@ class LocationDetailViewController: UIViewController {
 
 extension LocationDetailViewController {
     func fetchLocation() {
-        NetworkManager.shared.fetch(RMLocation.self, from: URL(string: locationLink)!) { [weak self] result in
-            switch result {
-            case .success(let location):
-                self?.location = location
-                DispatchQueue.main.async {
-                    self?.configueView()
-                    self?.tableView.reloadData()
+        if let url = URL(string: locationLink) {
+            NetworkManager.shared.fetch(RMLocation.self, from: url) { [weak self] result in
+                switch result {
+                case .success(let location):
+                    self?.location = location
+                    DispatchQueue.main.async {
+                        self?.configueView()
+                        self?.tableView.reloadData()
+                    }
+                case .failure(let error):
+                    print(error)
+                    self?.showAlert(withStatus: .failed)
                 }
-            case .failure(let error):
-                print(error)
-                self?.showAlert(withStatus: .failed)
             }
         }
     }
