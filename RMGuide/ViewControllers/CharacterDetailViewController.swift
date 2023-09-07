@@ -244,16 +244,21 @@ class CharacterDetailViewController: UIViewController {
             characterTitle.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor, constant: 100),
             characterTitle.widthAnchor.constraint(equalToConstant: view.frame.width-40),
             characterTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
             characterImage.widthAnchor.constraint(equalToConstant: 200),
             characterImage.heightAnchor.constraint(equalToConstant: 200),
             characterImage.topAnchor.constraint(lessThanOrEqualTo: characterTitle.bottomAnchor, constant: 20),
             characterImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
             descriptionStackView.topAnchor.constraint(lessThanOrEqualTo: characterImage.bottomAnchor, constant: 20),
             descriptionStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             descriptionStackView.widthAnchor.constraint(equalToConstant: view.frame.width-20),
+            
             statusLabel.leadingAnchor.constraint(equalTo: statusTemplate.trailingAnchor, constant: 5),
             speciesLabel.leadingAnchor.constraint(equalTo: speciesTemplate.trailingAnchor, constant: 5),
+            
             originLabel.leadingAnchor.constraint(equalTo: originTemplate.trailingAnchor, constant: 0),
+            
             episodeTemplate.topAnchor.constraint(lessThanOrEqualTo: descriptionStackView.bottomAnchor, constant: 40),
             episodeTemplate.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             episodeTemplate.widthAnchor.constraint(equalToConstant: view.frame.width-40)

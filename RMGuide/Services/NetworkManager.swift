@@ -32,7 +32,7 @@ enum NetworkError: Error {
 
 final class NetworkManager {
     
-    var itemsCount = 20
+    private var itemsCount = 20
 
     static let shared = NetworkManager()
     

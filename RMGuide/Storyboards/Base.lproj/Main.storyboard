@@ -3,11 +3,77 @@
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Person View Controller-->
+        <scene sceneID="31d-CI-UcI">
+            <objects>
+                <viewController id="73r-Y2-U6v" customClass="PersonViewController" customModule="RMGuide" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3Sg-W9-ZxS">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="787"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1l5-L9-aKE">
+                                <rect key="frame" x="0.0" y="20" width="390" height="56"/>
+                                <items>
+                                    <navigationItem title="Person Data" id="mgi-0X-CF8">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="p4I-dI-ynR">
+                                            <connections>
+                                                <action selector="cancelButtonPressed:" destination="73r-Y2-U6v" id="Zp2-nz-5w8"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="CaG-H9-NDy">
+                                            <connections>
+                                                <action selector="doneButtonPressed:" destination="73r-Y2-U6v" id="uNZ-kf-syz"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="vKW-5V-B9O">
+                                <rect key="frame" x="20" y="96" width="350" height="96"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="My name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5db-hZ-ol0">
+                                        <rect key="frame" x="0.0" y="0.0" width="350" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="My surname" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kOj-f7-Nc6">
+                                        <rect key="frame" x="0.0" y="62" width="350" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="XjW-Ak-oEg"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="XjW-Ak-oEg" firstAttribute="trailing" secondItem="vKW-5V-B9O" secondAttribute="trailing" constant="20" id="EQi-7E-c2k"/>
+                            <constraint firstItem="vKW-5V-B9O" firstAttribute="centerX" secondItem="3Sg-W9-ZxS" secondAttribute="centerX" id="Psj-pX-7z7"/>
+                            <constraint firstItem="vKW-5V-B9O" firstAttribute="top" secondItem="1l5-L9-aKE" secondAttribute="bottom" constant="20" id="VhQ-fe-Jz3"/>
+                            <constraint firstItem="1l5-L9-aKE" firstAttribute="top" secondItem="XjW-Ak-oEg" secondAttribute="top" constant="20" id="VwY-3e-OQ6"/>
+                            <constraint firstItem="vKW-5V-B9O" firstAttribute="leading" secondItem="XjW-Ak-oEg" secondAttribute="leading" constant="20" id="Ze0-b9-JFV"/>
+                            <constraint firstItem="1l5-L9-aKE" firstAttribute="centerX" secondItem="vKW-5V-B9O" secondAttribute="centerX" id="fMU-or-Qst"/>
+                            <constraint firstItem="1l5-L9-aKE" firstAttribute="leading" secondItem="XjW-Ak-oEg" secondAttribute="leading" id="ii9-rF-BYO"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="doneButton" destination="CaG-H9-NDy" id="JdG-fh-LU6"/>
+                        <outlet property="firstNameTextField" destination="5db-hZ-ol0" id="OAo-4R-cKq"/>
+                        <outlet property="lastNameTextField" destination="kOj-f7-Nc6" id="KNE-jL-34L"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oGH-MZ-7NX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-563" y="-1879"/>
+        </scene>
         <!--Root View Controller-->
         <scene sceneID="oT5-FE-SPS">
             <objects>
@@ -167,7 +233,15 @@
                             <outlet property="delegate" destination="TIM-5K-xLf" id="CZb-Km-pv2"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="5MD-HA-NPg"/>
+                    <navigationItem key="navigationItem" id="5MD-HA-NPg">
+                        <barButtonItem key="rightBarButtonItem" title="Person" id="PAh-DK-bTa">
+                            <imageReference key="image" image="person.circle" catalog="system" symbolScale="large" variableValue="1"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <segue destination="73r-Y2-U6v" kind="presentation" id="7Nt-UQ-rgW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="8bA-ie-HV2" kind="show" identifier="showCharacter" id="kLb-Te-31y"/>
                         <segue destination="fYn-xJ-VVQ" kind="show" identifier="showEpisodes" id="Yh0-w6-UGO"/>
@@ -225,6 +299,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="person.circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

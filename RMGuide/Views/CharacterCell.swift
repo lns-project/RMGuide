@@ -174,6 +174,13 @@ class CharacterCell: UITableViewCell {
         return spinner
     }()
     
+    private var imageURL: String? {
+        didSet {
+            characterImage.setBackgroundImage(nil, for: .normal)
+            updateImage()
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -204,16 +211,8 @@ class CharacterCell: UITableViewCell {
             characterFirstEpisode.text = episode
         }
         
-        guard let image = character.image else { return }
-        networkManager.fetchImage(from: image) { [weak self] result in
-            switch result {
-            case .success(let imageData):
-                self?.characterImage.setBackgroundImage(UIImage(data: imageData), for: .normal)
-                self?.spinnerView.stopAnimating()
-            case .failure(let error):
-                print(error)
-            }
-        }
+        imageURL = character.image
+        
         characterImage.addTarget(self,
                                  action: #selector(self.characterPressed),
                                  for: .touchUpInside)
@@ -226,6 +225,44 @@ class CharacterCell: UITableViewCell {
         episodeButton.addTarget(self,
                                 action: #selector(self.episodePressed),
                                 for: .touchUpInside)
+    }
+    
+    private func updateImage() {
+        guard let imageURL = imageURL,
+              let url = URL(string: imageURL) else { return }
+        
+        getImage(from: url) { [weak self] result in
+            switch result {
+            case .success(let image):
+                if imageURL == self?.imageURL {
+                    self?.characterImage.setBackgroundImage(image, for: .normal)
+                    self?.spinnerView.stopAnimating()
+                }
+            case .failure(let error):
+                print(error)
+            }
+            
+        }
+    }
+    
+    private func getImage(from url:URL, completion: @escaping(Result<UIImage, Error>) -> Void) {
+        if let cachedImage = ImageCashManager.shared.object(forKey: url.lastPathComponent as NSString) {
+            print("Image from cache: ", url.lastPathComponent)
+            completion(.success(cachedImage))
+            return
+        }
+        
+        networkManager.fetchImage(from: url.absoluteString) { result in
+            switch result {
+            case .success(let imageData):
+                guard let uiImage = UIImage(data: imageData) else { return }
+                ImageCashManager.shared.setObject(uiImage, forKey: url.lastPathComponent as NSString)
+                print("Image from network: ", url.lastPathComponent)
+                completion(.success(uiImage))
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     private func setupUI() {

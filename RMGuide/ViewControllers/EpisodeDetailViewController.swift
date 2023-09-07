@@ -79,9 +79,11 @@ class EpisodeDetailViewController: UIViewController {
             episodeLabel.topAnchor.constraint(lessThanOrEqualTo: view.topAnchor, constant: 100),
             episodeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             episodeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
             episodeNumberLabel.topAnchor.constraint(equalTo: episodeLabel.bottomAnchor, constant: 20),
             episodeNumberLabel.widthAnchor.constraint(equalToConstant: view.frame.width-40),
             episodeNumberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
             tableView.topAnchor.constraint(equalTo: episodeNumberLabel.bottomAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
