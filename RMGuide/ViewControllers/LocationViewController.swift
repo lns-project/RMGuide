@@ -33,14 +33,6 @@ class LocationViewController: UITableViewController {
         }
     }
     
-    private func setupUI() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = UIColor(red: 140/255, green: 81/255, blue: 92/255, alpha: 1.0)
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         locationList.count
     }
@@ -96,6 +88,14 @@ class LocationViewController: UITableViewController {
             }
             
         }
+    }
+    
+    private func setupUI() {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = UIColor(red: 140/255, green: 81/255, blue: 92/255, alpha: 1.0)
     }
 }
 

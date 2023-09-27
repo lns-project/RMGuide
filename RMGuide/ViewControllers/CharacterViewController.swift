@@ -24,47 +24,6 @@ class CharacterViewController: UITableViewController {
         fetchCharacters()
     }
     
-    private func showAlert(withStatus status: Alert) {
-        DispatchQueue.main.async { [unowned self] in
-            let alert = UIAlertController(title: status.title, message: status.message, preferredStyle: .alert)
-            
-            let okAction = UIAlertAction(title: "OK", style: .default)
-            
-            alert.addAction(okAction)
-            
-            present(alert, animated: true)
-        }
-    }
-    
-    private func setupUI() {
-        tableView.register(CharacterCell.self, forCellReuseIdentifier: cellIdentifier)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = UIColor(red: 217/255, green: 193/255, blue: 74/255, alpha: 1.0)
-    }
-    
-    private func setupSearchBar() {
-        let searchController = UISearchController(searchResultsController: nil)
-            searchController.delegate = self as? UISearchControllerDelegate
-            searchController.hidesNavigationBarDuringPresentation = true
-            searchController.searchBar.delegate = self as? UISearchBarDelegate
-
-            let searchBar = searchController.searchBar
-            searchBar.tintColor = UIColor.white
-            searchBar.barTintColor = UIColor.white
-
-            if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
-                if let backgroundview = textfield.subviews.first {
-                    backgroundview.backgroundColor = UIColor.white
-                    backgroundview.layer.cornerRadius = 10;
-                    backgroundview.clipsToBounds = true;
-                }
-            }
-            navigationItem.searchController = searchController
-            navigationItem.hidesSearchBarWhenScrolling = true
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         characterList.count
     }
@@ -108,6 +67,47 @@ class CharacterViewController: UITableViewController {
             }
             
         }
+    }
+    
+    private func showAlert(withStatus status: Alert) {
+        DispatchQueue.main.async { [unowned self] in
+            let alert = UIAlertController(title: status.title, message: status.message, preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            
+            alert.addAction(okAction)
+            
+            present(alert, animated: true)
+        }
+    }
+    
+    private func setupUI() {
+        tableView.register(CharacterCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = UIColor(red: 217/255, green: 193/255, blue: 74/255, alpha: 1.0)
+    }
+    
+    private func setupSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+            searchController.delegate = self as? UISearchControllerDelegate
+            searchController.hidesNavigationBarDuringPresentation = true
+            searchController.searchBar.delegate = self as? UISearchBarDelegate
+
+            let searchBar = searchController.searchBar
+            searchBar.tintColor = UIColor.white
+            searchBar.barTintColor = UIColor.white
+
+            if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
+                if let backgroundview = textfield.subviews.first {
+                    backgroundview.backgroundColor = UIColor.white
+                    backgroundview.layer.cornerRadius = 10;
+                    backgroundview.clipsToBounds = true;
+                }
+            }
+            navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = true
     }
 }
 

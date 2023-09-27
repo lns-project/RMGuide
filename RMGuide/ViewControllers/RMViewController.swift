@@ -41,7 +41,7 @@ class RMViewController: UICollectionViewController {
     private let userActions = UserAction.allCases
     private let networkManager = NetworkManager.shared
     
-    let imageView : UIImageView = {
+    private let imageView : UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(named:"background")
         iv.contentMode = .topRight

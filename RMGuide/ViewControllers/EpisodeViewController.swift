@@ -21,26 +21,6 @@ class EpisodeViewController: UITableViewController {
         fetchEpisodes()
     }
     
-    private func showAlert(withStatus status: Alert) {
-        DispatchQueue.main.async { [unowned self] in
-            let alert = UIAlertController(title: status.title, message: status.message, preferredStyle: .alert)
-            
-            let okAction = UIAlertAction(title: "OK", style: .default)
-            
-            alert.addAction(okAction)
-            
-            present(alert, animated: true)
-        }
-    }
-    
-    private func setupUI() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = UIColor(red: 48/255, green: 46/255, blue: 86/255, alpha: 1.0)
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         episodeList.count
     }
@@ -94,8 +74,27 @@ class EpisodeViewController: UITableViewController {
                     }
                 }
             }
-            
         }
+    }
+    
+    private func showAlert(withStatus status: Alert) {
+        DispatchQueue.main.async { [unowned self] in
+            let alert = UIAlertController(title: status.title, message: status.message, preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            
+            alert.addAction(okAction)
+            
+            present(alert, animated: true)
+        }
+    }
+    
+    private func setupUI() {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = UIColor(red: 48/255, green: 46/255, blue: 86/255, alpha: 1.0)
     }
 }
 

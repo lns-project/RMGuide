@@ -9,6 +9,9 @@ import UIKit
 
 class CharacterDetailViewController: UIViewController {
     
+    var episodesButtonHide = false
+    var character: RMCharacter!
+    
     private let networkManager = NetworkManager.shared
     
     private var characterImage: UIImageView = {
@@ -144,9 +147,6 @@ class CharacterDetailViewController: UIViewController {
     }()
     
     private var spinnerView = UIActivityIndicatorView()
-    
-    var episodesButtonHide = false
-    var character: RMCharacter!
     
     init(character: RMCharacter) {
         super.init(nibName: nil, bundle: nil)
