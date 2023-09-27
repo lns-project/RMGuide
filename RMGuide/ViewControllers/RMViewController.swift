@@ -85,17 +85,6 @@ class RMViewController: UICollectionViewController {
         }
     }
     
-    private func showAlert(withStatus status: Alert) {
-        DispatchQueue.main.async { [unowned self] in
-            let alert = UIAlertController(title: status.title, message: status.message, preferredStyle: .alert)
-            
-            let okAction = UIAlertAction(title: "OK", style: .default)
-            
-            alert.addAction(okAction)
-            
-            present(alert, animated: true)
-        }
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showCharacter" {
