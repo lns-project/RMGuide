@@ -22,7 +22,7 @@ enum Alert {
         case .success:
             return "Success"
         case .failed:
-            return "Failed"
+            return "Failed" 
         }
     }
     
